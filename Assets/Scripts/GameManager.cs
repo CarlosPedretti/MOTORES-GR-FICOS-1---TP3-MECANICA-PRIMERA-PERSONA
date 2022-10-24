@@ -4,6 +4,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private GameObject LifeBar;
     [SerializeField] private GameObject GameOverScreen;
     [SerializeField] private TMP_Text ScoreText;
 
@@ -15,6 +16,20 @@ public class GameManager : MonoBehaviour
     public void ShowGameOverScreen()
     {
         GameOverScreen.SetActive(true);
+    }
+
+
+    public void Start()
+    {
+            LifeBar.SetActive(true);
+
+    }
+
+
+
+    public void ShowLifeBar()
+    {
+        LifeBar.SetActive(true);
     }
 
 
