@@ -17,11 +17,14 @@ public class Score : MonoBehaviour
 
 
 
-    public void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider collision)
     {
-        Destroy(other.gameObject);
-        contador = contador + 1;
-        updateScore();
+        if (collision.gameObject.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            contador = contador + 1;
+            updateScore();
+        }
 
         if (contador == totalItems)
         {
@@ -36,7 +39,7 @@ public class Score : MonoBehaviour
 
     public void Awake()
     {
-        totalItems = GameObject.FindGameObjectsWithTag("Item").Length;
+        totalItems = GameObject.FindGameObjectsWithTag("Enemy").Length;
 
         contador = 0;
         updateScore();

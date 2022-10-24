@@ -6,15 +6,17 @@ TagManager:
   tags:
   - Item
   - Ground
+  - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Obstaculo
   - 
   - 
   - 
@@ -42,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 484958221
+    locked: 0
+  - name: Player
+    uniqueID: 2855319291
+    locked: 0
+  - name: Obstaculo
+    uniqueID: 3056164573
     locked: 0

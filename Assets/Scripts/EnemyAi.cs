@@ -19,16 +19,26 @@ public class EnemyAi : MonoBehaviour
 
     //Attacking
     public float timeBetweenAttacks;
-    bool alreadyAttacked;
+
     public GameObject projectile;
 
     //States
     public float sightRange, attackRange;
     public bool playerInSightRange, playerInAttackRange;
 
+    //New attack
+    public GameObject bullet;
+    public Transform spawnPoint;
+    public float shotForce = 1500f;
+    public float shotRate = 0.5f;
+
+    private float shotRateTime = 0;
+
+
+
     private void Awake()
     {
-        player = GameObject.Find("PlayerObj").transform;
+        player = GameObject.Find("PLAYER").transform;
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -41,6 +51,8 @@ public class EnemyAi : MonoBehaviour
         if (!playerInSightRange && !playerInAttackRange) Patroling();
         if (playerInSightRange && !playerInAttackRange) ChasePlayer();
         if (playerInAttackRange && playerInSightRange) AttackPlayer();
+
+
     }
 
     private void Patroling()
@@ -80,21 +92,18 @@ public class EnemyAi : MonoBehaviour
 
         transform.LookAt(player);
 
-        if (!alreadyAttacked)
+        if (Time.time > shotRateTime)
         {
-            ///Attack code here
-            Rigidbody rb = Instantiate(projectile, transform.position, Quaternion.identity).GetComponent<Rigidbody>();
-            rb.AddForce(transform.forward * 32f, ForceMode.Impulse);
-            rb.AddForce(transform.up * 8f, ForceMode.Impulse);
-            ///End of attack code
+            GameObject newBullet;
 
-            alreadyAttacked = true;
-            Invoke(nameof(ResetAttack), timeBetweenAttacks);
+            newBullet = Instantiate(bullet, spawnPoint.position, spawnPoint.rotation);
+
+            newBullet.GetComponent<Rigidbody>().AddForce(spawnPoint.forward * shotForce);
+
+            shotRateTime = Time.time + shotRate;
+
+            Destroy(newBullet, 1);
         }
-    }
-    private void ResetAttack()
-    {
-        alreadyAttacked = false;
     }
 
     public void TakeDamage(int damage)
